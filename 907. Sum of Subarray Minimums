@@ -1,0 +1,38 @@
+class Solution {
+int mod = 1e9 + 7;
+public:
+    int sumSubarrayMins(vector<int>& nums) {
+        int n = nums.size(), ans = 0;
+        vector<int> ls(n), rs(n);
+
+        stack<pair<int,int>> st;
+        st.push({-1,n});
+
+        for(int i=n-1; i>=0; i--){
+            while(nums[i] <= st.top().first){
+                st.pop();
+            }
+
+            rs[i] = st.top().second-i;
+            st.push({nums[i],i});
+        }
+
+        stack<pair<int,int>> kt;
+        kt.push({-1,-1});
+        
+        for(int i=0; i<n; i++){
+            while(nums[i] < kt.top().first){
+                kt.pop();
+            }
+
+            ls[i] = i-kt.top().second;
+            kt.push({nums[i],i});
+        }
+
+        for(int i=0; i<n; i++){
+            ans = (ans%mod + (ls[i]*1LL*rs[i]*1LL*nums[i])%mod) % mod;
+        }
+
+        return ans;
+    }
+};

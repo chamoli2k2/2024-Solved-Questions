@@ -1,0 +1,24 @@
+class Solution {
+private:
+    bool check(string &s,string &k,int idx){
+        int n = s.size(), i = idx, j = 0;
+
+        while(j < n){
+            if(s[idx%n] != k[j]) return false;
+            idx++, j++;
+        }
+        
+        return true;
+    }
+public:
+    bool rotateString(string s, string goal) {
+        int n = s.size(), m = goal.size();
+        if(n != m) return false;
+
+        for(int i=0; i<n; i++){
+            if(check(s,goal,i)) return true;
+        }
+
+        return false;
+    }
+};
